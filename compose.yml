@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: ./backend       
+      dockerfile: ./src/Api/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:8088
+      - ConnectionStrings__Default=Server=host.docker.internal,1433;Database=BancoDb;User ID=bank_user;Password=Strong!Passw0rd123;Encrypt=False;TrustServerCertificate=True
+    ports:
+      - "8088:8088"
+
+  web:
+    build:
+      context: ./frontend/banking-app
+      dockerfile: ./Dockerfile
+      args:
+        - APP_NAME=banking-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
