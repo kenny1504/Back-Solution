@@ -85,3 +85,4 @@ backend/Debug/
 backend/Release/
 backend/*.log
 backend/*/*.log
+backend/.idea
