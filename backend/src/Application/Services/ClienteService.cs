@@ -33,7 +33,7 @@ public class ClienteService
     {
         var hash = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(dto.Contrasena));
 
-        var entity = new Cliente
+        var cliente = new Cliente
         {
             ClienteId = dto.ClienteId,
             ContrasenaHash = hash,
@@ -46,37 +46,37 @@ public class ClienteService
             Telefono = dto.Telefono
         };
 
-        await _uow.Repository<Cliente>().AddAsync(entity, ct);
+        await _uow.Repository<Cliente>().AddAsync(cliente, ct);
         await _uow.SaveChangesAsync(ct);
-        return entity.Id;
+        return cliente.Id;
     }
 
     public async Task UpdateAsync(int id, ClienteUpdateDto dto, CancellationToken ct)
     {
-        var cli = await _uow.Repository<Cliente>().GetByIdAsync(id, ct);
-        if (cli is null) throw new KeyNotFoundException($"Cliente {id} no existe.");
+        var cliente = await _uow.Repository<Cliente>().GetByIdAsync(id, ct);
+        if (cliente is null) throw new KeyNotFoundException($"Cliente {id} no existe.");
 
-        if (!cli.ClienteId.Equals(dto.ClienteId, StringComparison.OrdinalIgnoreCase) &&
+        if (!cliente.ClienteId.Equals(dto.ClienteId, StringComparison.OrdinalIgnoreCase) &&
             await _uow.Repository<Cliente>().ListAsync(c => c.ClienteId == dto.ClienteId && c.Id != id, ct)
                 .ContinueWith(t => t.Result.Any(), ct))
             throw new ValidationException("El ClienteId ya está registrado.");
 
-        if (!cli.Identificacion.Equals(dto.Identificacion, StringComparison.OrdinalIgnoreCase) &&
+        if (!cliente.Identificacion.Equals(dto.Identificacion, StringComparison.OrdinalIgnoreCase) &&
             await _uow.Repository<Cliente>().ListAsync(c => c.Identificacion == dto.Identificacion && c.Id != id, ct)
                 .ContinueWith(t => t.Result.Any(), ct))
             throw new ValidationException("La identificación ya está registrada.");
 
-        cli.Nombre = dto.Nombre.Trim();
-        cli.ClienteId = dto.ClienteId.Trim();
-        cli.Telefono = string.IsNullOrWhiteSpace(dto.Telefono) ? null : dto.Telefono.Trim();
-        cli.Identificacion = dto.Identificacion.Trim();
-        cli.Direccion = dto.Direccion.Trim();
-        cli.Activo = dto.Activo;
-        cli.Genero = dto.Genero;
+        cliente.Nombre = dto.Nombre.Trim();
+        cliente.ClienteId = dto.ClienteId.Trim();
+        cliente.Telefono = string.IsNullOrWhiteSpace(dto.Telefono) ? null : dto.Telefono.Trim();
+        cliente.Identificacion = dto.Identificacion.Trim();
+        cliente.Direccion = dto.Direccion.Trim();
+        cliente.Activo = dto.Activo;
+        cliente.Genero = dto.Genero;
 
         if (!string.IsNullOrWhiteSpace(dto.Contrasena))
         {
-            cli.ContrasenaHash = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(dto.Contrasena));
+          cliente.ContrasenaHash = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(dto.Contrasena));
         }
 
         await _uow.SaveChangesAsync(ct);
@@ -86,8 +86,8 @@ public class ClienteService
     public async Task DeleteAsync(int id, CancellationToken ct)
     {
         var repo = _uow.Repository<Cliente>();
-        var entity = await repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException("Cliente no encontrado");
-        repo.Remove(entity);
+        var cliente = await repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException("Cliente no encontrado");
+        repo.Remove(cliente);
         await _uow.SaveChangesAsync(ct);
     }
 }

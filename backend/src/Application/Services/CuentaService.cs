@@ -37,19 +37,19 @@ public class CuentaService
 
     public async Task<CuentaDto?> GetAsync(int id, CancellationToken ct)
     {
-        var entity = await _uow.Repository<Cuenta>().GetByIdAsync(id, ct);
-        return entity is null ? null : _mapper.Map<CuentaDto>(entity);
+        var cuenta = await _uow.Repository<Cuenta>().GetByIdAsync(id, ct);
+        return cuenta is null ? null : _mapper.Map<CuentaDto>(cuenta);
     }
 
     public async Task<int> CreateAsync(CreateCuentaDto dto, CancellationToken ct)
     {
-        // Cliente debe existir
+
         var clienteExists = await _uow.Repository<Cliente>()
             .ListAsync(c => c.Id == dto.ClienteId, ct)
             .ContinueWith(t => t.Result.Any(), ct);
         if (!clienteExists) throw new ValidationException("Cliente no existe.");
 
-        // NumeroCuenta único
+
         var numeroDuplicado = await _uow.Repository<Cuenta>()
             .ListAsync(c => c.Numero == dto.Numero, ct)
             .ContinueWith(t => t.Result.Any(), ct);
@@ -71,10 +71,10 @@ public class CuentaService
 
     public async Task UpdateAsync(int id, UpdateCuentaDto dto, CancellationToken ct)
     {
-        var cta = await _uow.Repository<Cuenta>().GetByIdAsync(id, ct);
-        if (cta is null) throw new KeyNotFoundException($"Cuenta {id} no existe.");
+        var cuenta = await _uow.Repository<Cuenta>().GetByIdAsync(id, ct);
+        if (cuenta is null) throw new KeyNotFoundException($"Cuenta {id} no existe.");
 
-        if (!cta.Numero.Equals(dto.Numero, StringComparison.OrdinalIgnoreCase) &&
+        if (!cuenta.Numero.Equals(dto.Numero, StringComparison.OrdinalIgnoreCase) &&
             await _uow.Repository<Cuenta>()
                 .ListAsync(c => c.Numero == dto.Numero && c.Id != id, ct)
                 .ContinueWith(t => t.Result.Any(), ct))
@@ -85,11 +85,11 @@ public class CuentaService
             .ContinueWith(t => t.Result.Any(), ct);
         if (!clienteExists) throw new ValidationException("Cliente no existe.");
 
-        cta.Numero = dto.Numero.Trim();
-        cta.Tipo = (TipoCuenta)dto.Tipo;
-        cta.SaldoInicial = dto.SaldoInicial;
-        cta.Activa = dto.Activa;
-        cta.ClienteIdFk = dto.ClienteId;
+        cuenta.Numero = dto.Numero.Trim();
+        cuenta.Tipo = (TipoCuenta)dto.Tipo;
+        cuenta.SaldoInicial = dto.SaldoInicial;
+        cuenta.Activa = dto.Activa;
+        cuenta.ClienteIdFk = dto.ClienteId;
 
         await _uow.SaveChangesAsync(ct);
     }
@@ -97,8 +97,8 @@ public class CuentaService
     public async Task DeleteAsync(int id, CancellationToken ct)
     {
         var repo = _uow.Repository<Cuenta>();
-        var entity = await repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException("Cuenta no encontrada");
-        repo.Remove(entity);
+        var cuenta = await repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException("Cuenta no encontrada");
+        repo.Remove(cuenta);
         await _uow.SaveChangesAsync(ct);
     }
 }

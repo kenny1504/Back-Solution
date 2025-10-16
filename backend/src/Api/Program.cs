@@ -10,7 +10,7 @@ var connStr = builder.Configuration.GetConnectionString("Default");
 
 // DI
 builder.Services.AddInfrastructure(connStr);
-builder.Services.AddApplication(); 
+builder.Services.AddApplication();
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(opt => opt.SuppressModelStateInvalidFilter = true);
 
