@@ -1,0 +1,17 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h1 class="brand">BANCO</h1>
+    <nav class="side-nav">
+      <a routerLink="/clientes" routerLinkActive="active">Clientes</a>
+      <a routerLink="/cuentas" routerLinkActive="active">Cuentas</a>
+      <a routerLink="/movimientos" routerLinkActive="active">Movimientos</a>
+      <a routerLink="/reportes" routerLinkActive="active">Reportes</a>
+    </nav>
+  </aside>
+
+  <!-- Contenido -->
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
+</div>
