@@ -1,0 +1,25 @@
+<h2 class="page-title">Movimientos</h2>
+<div class="text-end mb-2">
+  <a class="btn warning mb-1" [routerLink]="['/movimientos/nuevo']">Nueva</a>
+</div>
+<div class="card modern-card">
+  <table class="table modern-table">
+    <thead>
+    <tr><th>ID</th><th>Cuenta</th><th>Fecha</th><th>Concepto</th><th>Monto</th><th></th></tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let m of data">
+      <td>{{m.id}}</td>
+      <td>{{m.cuentaId}}</td>
+      <td>{{m.fecha | date:'yyyy-MM-dd'}}</td>
+      <td>{{m.concepto}}</td>
+      <td>{{m.monto | number:'1.2-2'}}</td>
+      <td class="actions">
+        <a class="btn outline" [routerLink]="['/movimientos', m.id, 'editar']">Editar</a>
+        <button class="btn danger" (click)="remove(m)">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <small class="muted">Total: {{data?.length || 0}} movimiento(s)</small>
+</div>

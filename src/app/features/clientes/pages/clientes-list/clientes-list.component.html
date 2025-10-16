@@ -1,0 +1,43 @@
+<h2 class="page-title">Clientes</h2>
+
+<div class="header-row">
+  <div class="search">
+    <input class="input" placeholder="Buscar" [(ngModel)]="query" (input)="applyFilter()">
+  </div>
+  <a class="btn warning mb-1" [routerLink]="['/clientes/nuevo']">Nuevo</a>
+</div>
+
+<div class="card modern-card">
+  <table class="table modern-table">
+    <thead>
+    <tr>
+      <th style="width:120px">Nombres</th>
+      <th>Direccion</th>
+      <th>Identificacion</th>
+      <th>Teléfono</th>
+      <th>Estado</th>
+      <th style="width:220px"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of view">
+      <td>{{c.nombre}}</td>
+      <td>{{c.direccion}}</td>
+      <td>{{c.identificacion}}</td>
+      <td>{{c.telefono || '-'}}</td>
+      <td>
+        <span *ngIf="c.activo; else inactivo" class="badge badge-success">Activo</span>
+        <ng-template #inactivo><span class="badge badge-danger">Inactivo</span></ng-template>
+      </td>
+      <td>
+        <a class="btn btn-success m-2" [routerLink]="['/clientes', c.id, 'editar']">Editar</a>
+        <button class="btn btn-danger"  (click)="remove(c)">Eliminar</button>
+      </td>
+    </tr>
+    <tr *ngIf="!view.length">
+      <td colspan="5"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="total-note">Total: {{view.length}} cliente(s)</div>
+</div>

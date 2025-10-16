@@ -10,19 +10,15 @@
     "noEmitOnError": true,
     "strict": true,
     "skipLibCheck": true,
+    "types": [],
     "baseUrl": "./",
     "paths": {
       "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"]
     },
-    "outDir": "./out-tsc/app",
-    "types": []
+    "outDir": "./out-tsc/app"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "src/**/*.spec.ts",
-    "src/test.ts"
-  ]
+  "files": [],
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/test.ts"]
 }

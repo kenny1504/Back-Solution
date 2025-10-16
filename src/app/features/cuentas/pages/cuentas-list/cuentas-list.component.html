@@ -1,0 +1,25 @@
+<h2 class="page-title">Cuentas</h2>
+<div class="text-end mb-2">
+  <a class="btn warning mb-1" [routerLink]="['/cuentas/nuevo']">Nueva</a>
+</div>
+<div class="card modern-card">
+  <table class="table modern-table">
+    <thead>
+    <tr><th>ID</th><th>Número</th><th>Tipo</th><th>Cliente</th><th>Saldo</th><th></th></tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of data">
+      <td>{{c.id}}</td>
+      <td>{{c.numero}}</td>
+      <td>{{c.tipo}}</td>
+      <td>{{c.clienteId}}</td>
+      <td>{{c.saldo | number:'1.2-2'}}</td>
+      <td class="actions">
+        <a class="btn outline" [routerLink]="['/cuentas', c.id, 'editar']">Editar</a>
+        <button class="btn danger" (click)="remove(c)">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <small class="muted">Total: {{data?.length || 0}} cuenta(s)</small>
+</div>
