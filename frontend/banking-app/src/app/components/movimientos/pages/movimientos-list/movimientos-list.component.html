@@ -1,0 +1,40 @@
+<h2 class="page-title">Movimientos</h2>
+<div class="header-row">
+  <div class="search">
+    <input class="input" placeholder="Buscar" [(ngModel)]="query" (input)="applyFilter()">
+  </div>
+  <a class="btn warning mb-1" [routerLink]="['/movimientos/nuevo']">Nuevo</a>
+</div>
+<div class="card modern-card">
+  <table class="table modern-table">
+    <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Cliente</th>
+      <th>Numero Cuenta</th>
+      <th>Tipo</th>
+      <th>Saldo Inicial</th>
+      <th>Estado</th>
+      <th>Movimiento</th>
+      <th>Saldo Disponible</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let m of view">
+      <td>{{m.fecha | date:'yyyy-MM-dd'}}</td>
+      <td>{{m.cliente}}</td>
+      <td>{{m.numero}}</td>
+      <td>{{m.tipo}}</td>
+      <td>{{m.saldoInicial| number:'1.2-2'}}</td>
+      <td>{{m.estado}}</td>
+      <td>{{m.movimiento| number:'1.2-2'}}</td>
+      <td>{{m.saldoDisponible| number:'1.2-2'}}</td>
+      <td>
+        <button class="btn btn-danger" (click)="remove(m)">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <small class="muted">Total: {{data?.length || 0}} movimiento(s)</small>
+</div>

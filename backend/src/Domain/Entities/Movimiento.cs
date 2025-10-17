@@ -4,9 +4,9 @@ public class Movimiento
 {
     public int Id { get; set; } // PK
     public DateTime Fecha { get; set; }
-    public string Tipo { get; set; } = null!;   // debito|credito
+    public int Tipo { get; set; }
     public decimal Valor { get; set; }
-    public decimal Saldo { get; set; }          // saldo después del mov.
+    public decimal Saldo { get; set; }
     public int CuentaIdFk { get; set; }
     public Cuenta Cuenta { get; set; } = null!;
 }

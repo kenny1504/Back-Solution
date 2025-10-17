@@ -18,15 +18,15 @@ public static class DependencyInjection
 
             return new MapperConfiguration(expr, loggerFactory);
         });
-        
+
         services.AddSingleton<IMapper>(sp =>
             new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
-        
+
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
-        
+
         services.AddScoped<Services.ClienteService>();
         services.AddScoped<Services.CuentaService>();
-        // services.AddScoped<Services.MovimientoService>();
+        services.AddScoped<Services.MovimientoService>();
 
         return services;
     }

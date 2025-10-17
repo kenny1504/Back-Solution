@@ -28,6 +28,6 @@ npm start
 ```
 
 ### Notas
-- La base de datos usa `EnsureCreated` + **seed** de ejemplo.
+- La base de datos usa `EnsureCreated`.
 - Endpoints principales en `/api/v1`: clientes, cuentas, movimientos, transferencias.
 - CORS permitido para `http://localhost:4200`.

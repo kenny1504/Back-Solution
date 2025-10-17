@@ -1,0 +1,48 @@
+<div class="card modern-card">
+  <h3>{{ id ? 'Editar' : 'Nueva' }} Cuenta</h3>
+  <div class="row">
+    <div class="col-6">
+      <label for="ClienteId">Cliente</label>
+      <select id="ClienteId" class="input modern-input" [(ngModel)]="model.clienteIdFk">
+        <option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="col-6">
+      <label>Número</label>
+      <input
+        class="input modern-input"
+        [(ngModel)]="model.numero"
+        type="text"
+      />
+    </div>
+    <div class="col-6">
+      <label>Tipo</label>
+      <select class="input modern-input" [(ngModel)]="model.tipo">
+        <option value="1">Ahorros</option>
+        <option value="2">Corriente</option>
+      </select>
+    </div>
+    <div class="col-6">
+      <label>Saldo Inicial</label>
+      <input
+        class="input modern-input"
+        type="number"
+        step="0.01"
+        [(ngModel)]="model.saldoInicial"
+      />
+    </div>
+    <div class="col-6">
+      <label>Estado</label>
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="model.activa">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+  <div class="actions" style="margin-top: 12px">
+    <a class="btn btn-primary" [routerLink]="['/cuentas']">Volver</a>
+    <button class="btn btn-success m-3" (click)="save()">Guardar</button>
+  </div>
+</div>

@@ -11,9 +11,8 @@ export class ApiService {
   clientes = 'clientes';
   cuentas = 'cuentas';
   movimientos = 'movimientos';
-  reportes = 'reportes';
+  reporte = 'reporte';
 
-  // ===== CRUD genéricos =====
   getAll<T>(entity: string): Observable<T[]> {
     return this.http.get<T[]>(`${this.base}/${entity}`);
   }
@@ -29,9 +28,7 @@ export class ApiService {
   delete<T>(entity: string, id: number | string): Observable<T> {
     return this.http.delete<T>(`${this.base}/${entity}/${id}`);
   }
-
-  // ===== Reportes =====
   getResumenMovimientos(params?: any): Observable<any> {
-    return this.http.get(`${this.base}/${this.reportes}/resumen`, { params });
+    return this.http.get(`${this.base}/${this.movimientos}/${this.reporte}`, { params });
   }
 }

@@ -1,7 +1,10 @@
 export interface Cuenta {
   id?: number;
+  clienteIdFk: number;
   clienteId: number;
+  cliente: string;
   numero: string;
-  tipo: 'ahorros' | 'corriente';
-  saldo: number;
+  tipo: 1 | 2;
+  saldoInicial: number;
+  activa: boolean;
 }
