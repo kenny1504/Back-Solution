@@ -46,15 +46,34 @@ public sealed class MovimientosController : ControllerBase
       });
     }
 
-    var id = await _movimientoService.CreateAsync(dto, ct);
-    return CreatedAtAction(nameof(Get), new { id }, null);
+    try
+    {
+       await _movimientoService.CreateAsync(dto, ct);
+      return Ok(new { mensaje = "Movimiento creado exitosamente" });
+    }
+    catch (Exception ex)
+    {
+      return StatusCode(500, new { mensaje = "Ocurrió un error al crear Movimiento", detalle = ex.Message });
+    }
   }
 
   [HttpDelete("{id:int}")]
   public async Task<IActionResult> Delete(int id, CancellationToken ct)
   {
-    await _movimientoService.DeleteAsync(id, ct);
-    return NoContent();
+
+    try
+    {
+      await _movimientoService.DeleteAsync(id, ct);
+      return Ok(new { mensaje = "Movimiento eliminado exitosamente" });
+    }
+    catch (KeyNotFoundException)
+    {
+      return NotFound(new { mensaje = "Movimiento no encontrado" });
+    }
+    catch (Exception ex)
+    {
+      return StatusCode(500, new { mensaje = "Ocurrió un error al eliminar el movimiento", detalle = ex.Message });
+    }
   }
 
   [HttpGet("reporte")]

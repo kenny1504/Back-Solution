@@ -31,6 +31,12 @@ public class ClienteService
 
   public async Task<int> CreateAsync(CreateClienteDto dto, CancellationToken ct)
   {
+    var existingCliente = await _uow.Repository<Cliente>().ListAsync(c => c.ClienteId == dto.ClienteId, ct);
+    if (existingCliente.Any())
+    {
+      throw new ValidationException("El ClienteId ya está en uso.");
+    }
+
     var hash = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(dto.Contrasena));
 
     var cliente = new Cliente
@@ -59,7 +65,7 @@ public class ClienteService
     if (!cliente.ClienteId.Equals(dto.ClienteId, StringComparison.OrdinalIgnoreCase) &&
         await _uow.Repository<Cliente>().ListAsync(c => c.ClienteId == dto.ClienteId && c.Id != id, ct)
           .ContinueWith(t => t.Result.Any(), ct))
-      throw new ValidationException("El ClienteId ya está registrado.");
+      throw new ValidationException("El ClienteId ya está en uso.");
 
     if (!cliente.Identificacion.Equals(dto.Identificacion, StringComparison.OrdinalIgnoreCase) &&
         await _uow.Repository<Cliente>().ListAsync(c => c.Identificacion == dto.Identificacion && c.Id != id, ct)

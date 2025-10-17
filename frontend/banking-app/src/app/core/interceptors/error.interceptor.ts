@@ -42,7 +42,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
     }),
     catchError(err => {
-      const msg = getMessage( err?.error?.detail || err?.error?.errors || err?.mensaje || err?.errors || err?.message);
+      const msg = getMessage(  err?.error?.detalle || err?.error?.detail || err?.error?.errors || err?.mensaje || err?.errors || err?.message);
       createToast(`Ocurrió un error en la solicitud:\n${msg}`);
       return throwError(() => err);
     })
