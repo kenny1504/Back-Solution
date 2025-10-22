@@ -1,5 +1,9 @@
 # Banking Tech Challenge (.NET 8 + Angular 17)
 
+<img width="774" height="897" alt="image" src="https://github.com/user-attachments/assets/3aab290e-0deb-42be-8d7b-a94ca89a9501" />
+
+<img width="843" height="912" alt="image" src="https://github.com/user-attachments/assets/dcfba90d-1c49-4482-86e9-b5773dec732b" />
+
 ## Requisitos
 - Docker (opcional) o
 - .NET 8 SDK y Node 20 + Angular CLI 17
